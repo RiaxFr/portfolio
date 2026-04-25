@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boulangerie Dupont — Artisan boulanger depuis 1978</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream: #FAF6EF;
+    --warm-white: #FFFDF9;
+    --wheat: #E8D9BC;
+    --tan: #C8A96A;
+    --brown: #6B4C2A;
+    --dark: #2C1F0E;
+    --text: #000000;
+    --muted: #8B7355;
+    --accent: #B5430A;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(250, 246, 239, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(200, 169, 106, 0.2);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 600; color: var(--brown);
+    letter-spacing: 0.03em; text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.85rem; font-weight: 400; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--brown); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+  }
+  .hero-text {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 5rem 3rem 5rem 4rem;
+  }
+  .hero-eyebrow {
+    font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--tan); margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; width: 40px; height: 1px; background: var(--tan);
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 300; line-height: 1.1; color: var(--dark);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--brown); }
+  .hero-desc {
+    font-size: 1rem; line-height: 1.75; color: var(--muted);
+    max-width: 400px; margin-bottom: 3rem;
+  }
+  .hero-cta {
+    display: flex; gap: 1.5rem; align-items: center;
+  }
+  .btn-primary {
+    background: var(--brown); color: var(--cream);
+    padding: 0.9rem 2.2rem; font-size: 0.85rem; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    border: none; cursor: pointer; text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--dark); transform: translateY(-1px); }
+  .btn-secondary {
+    font-size: 0.85rem; color: var(--brown); text-decoration: none;
+    letter-spacing: 0.06em; border-bottom: 1px solid var(--tan);
+    padding-bottom: 2px; transition: color 0.2s;
+  }
+  .btn-secondary:hover { color: var(--dark); }
+
+  .hero-visual {
+    position: relative; overflow: hidden;
+    background: var(--wheat);
+  }
+  .hero-visual-inner {
+    width: 100%; height: 100%;
+    background:
+      radial-gradient(ellipse at 30% 60%, rgba(181,67,10,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(107,76,42,0.06) 0%, transparent 50%),
+      var(--wheat);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-illustration {
+    width: 380px; height: 380px; position: relative;
+  }
+  .bread-svg { width: 100%; height: 100%; }
+
+  /* BAND */
+  .band {
+    background: var(--brown); padding: 1.2rem 4rem;
+    display: flex; align-items: center; gap: 4rem; overflow: hidden;
+  }
+  .band-item {
+    display: flex; align-items: center; gap: 0.8rem;
+    font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--wheat); white-space: nowrap;
+  }
+  .band-dot { width: 4px; height: 4px; background: var(--tan); border-radius: 50%; }
+
+  /* ABOUT */
+  .about {
+    padding: 8rem 4rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+    align-items: center;
+  }
+  .about-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 9rem; font-weight: 300; line-height: 1;
+    color: var(--wheat); user-select: none; margin-bottom: -1rem;
+  }
+  .about h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem; font-weight: 400; line-height: 1.2;
+    color: var(--dark); margin-bottom: 1.5rem;
+  }
+  .about h2 em { font-style: italic; color: var(--brown); }
+  .about p { font-size: 0.95rem; line-height: 1.85; color: var(--muted); margin-bottom: 1rem; }
+  .about-image-placeholder {
+    background: var(--wheat);
+    aspect-ratio: 4/5;
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .about-image-placeholder::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(181,67,10,0.05) 0%, transparent 50%);
+  }
+  .stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2rem; margin-top: 2.5rem;
+    padding-top: 2.5rem; border-top: 1px solid var(--wheat);
+  }
+  .stat-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem; font-weight: 400; color: var(--brown);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); margin-top: 0.4rem;
+  }
+
+  /* PRODUCTS */
+  .products { padding: 5rem 4rem 8rem; }
+  .section-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 4rem;
+  }
+  .section-eyebrow {
+    font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--tan); margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem; font-weight: 400; color: var(--dark); line-height: 1.15;
+  }
+  .section-title em { font-style: italic; color: var(--brown); }
+  .products-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+  }
+  .product-card {
+    background: var(--warm-white);
+    padding: 2.5rem 2rem 2rem;
+    transition: transform 0.25s;
+    cursor: default;
+  }
+  .product-card:hover { transform: translateY(-4px); }
+  .product-icon {
+    width: 56px; height: 56px; margin-bottom: 1.5rem;
+  }
+  .product-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 400; color: var(--dark);
+    margin-bottom: 0.6rem;
+  }
+  .product-card p {
+    font-size: 0.88rem; line-height: 1.7; color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  .product-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; color: var(--brown); font-weight: 400;
+  }
+  .product-tag {
+    display: inline-block; font-size: 0.7rem; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 3px 10px;
+    background: var(--wheat); color: var(--brown);
+    margin-bottom: 1rem;
+  }
+
+  /* TESTIMONIALS */
+  .testimonials {
+    background: var(--dark); padding: 7rem 4rem;
+    color: var(--cream);
+  }
+  .testimonials .section-title { color: var(--wheat); }
+  .testimonials .section-eyebrow { color: var(--tan); }
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 3rem; margin-top: 4rem;
+  }
+  .testimonial-card { border-top: 1px solid rgba(200,169,106,0.3); padding-top: 2rem; }
+  .testimonial-stars { color: var(--tan); font-size: 0.85rem; margin-bottom: 1rem; }
+  .testimonial-card blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 300; font-style: italic;
+    line-height: 1.7; color: var(--wheat); margin-bottom: 1.5rem;
+  }
+  .testimonial-author { font-size: 0.8rem; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; }
+
+  /* HOURS */
+  .hours {
+    padding: 7rem 4rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+    align-items: start;
+  }
+  .hours-table { width: 100%; border-collapse: collapse; margin-top: 2.5rem; }
+  .hours-table tr { border-bottom: 1px solid var(--wheat); }
+  .hours-table td { padding: 1rem 0; font-size: 0.92rem; }
+  .hours-table td:first-child { color: var(--muted); }
+  .hours-table td:last-child { text-align: right; font-weight: 500; color: var(--brown); }
+  .hours-table tr.closed td:last-child { color: var(--muted); font-weight: 400; }
+  .contact-info { margin-top: 2.5rem; }
+  .contact-item {
+    display: flex; gap: 1rem; align-items: flex-start;
+    margin-bottom: 1.2rem;
+  }
+  .contact-icon { color: var(--tan); font-size: 1rem; margin-top: 2px; flex-shrink: 0; }
+  .contact-text { font-size: 0.9rem; line-height: 1.6; color: var(--muted); }
+  .contact-text strong { color: var(--text); font-weight: 500; }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark); padding: 3rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(200,169,106,0.1);
+  }
+  footer .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 400; color: var(--wheat);
+  }
+  footer p { font-size: 0.78rem; color: var(--muted); }
+  .footer-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; color: var(--tan); font-size: 0.95rem;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-eyebrow { animation: fadeUp 0.6s 0.1s both; }
+  .hero h1 { animation: fadeUp 0.7s 0.2s both; }
+  .hero-desc { animation: fadeUp 0.7s 0.35s both; }
+  .hero-cta { animation: fadeUp 0.7s 0.5s both; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .hero-text { padding: 4rem 1.5rem 3rem; }
+    .about { grid-template-columns: 1fr; padding: 5rem 1.5rem; gap: 3rem; }
+    .about-image-placeholder { display: none; }
+    .products { padding: 4rem 1.5rem; }
+    .products-grid { grid-template-columns: 1fr; gap: 1px; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+    .testimonials { padding: 5rem 1.5rem; }
+    .testimonials-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .hours { grid-template-columns: 1fr; padding: 5rem 1.5rem; gap: 3rem; }
+    .band { gap: 2rem; padding: 1rem 1.5rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">Boulangerie Dupont</a>
+  <ul class="nav-links">
+    <li><a href="#nos-produits">Nos produits</a></li>
+    <li><a href="#notre-histoire">Notre histoire</a></li>
+    <li><a href="#horaires">Horaires</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow">Artisan boulanger depuis 1978</p>
+    <h1>Du pain fait<br>avec <em>passion</em>,<br>du levain naturel</h1>
+    <p class="hero-desc">Chaque matin, nos boulangers façonnent à la main des pains et viennoiseries avec des ingrédients soigneusement sélectionnés. Une tradition familiale transmise de génération en génération.</p>
+    <div class="hero-cta">
+      <a href="#nos-produits" class="btn-primary">Découvrir nos créations</a>
+      <a href="#notre-histoire" class="btn-secondary">Notre histoire →</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-visual-inner">
+      <div class="hero-illustration">
+        <svg class="bread-svg" viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Fond décoratif cercle -->
+          <circle cx="190" cy="190" r="160" fill="#D4B896" opacity="0.25"/>
+          <circle cx="190" cy="190" r="120" fill="#C8A96A" opacity="0.18"/>
+
+          <!-- Miche de pain principale -->
+          <ellipse cx="190" cy="205" rx="120" ry="80" fill="#B07D3A"/>
+          <ellipse cx="190" cy="200" rx="118" ry="75" fill="#C8924A"/>
+          <ellipse cx="190" cy="193" rx="112" ry="68" fill="#D4A05A"/>
+
+          <!-- Croûte du dessus -->
+          <ellipse cx="190" cy="170" rx="100" ry="55" fill="#C08040"/>
+          <ellipse cx="190" cy="163" rx="96" ry="50" fill="#D4924A"/>
+          <ellipse cx="190" cy="158" rx="88" ry="44" fill="#E0A055"/>
+
+          <!-- Grigne (entaille) -->
+          <path d="M148 148 Q190 128 232 148" stroke="#8B5C25" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.6"/>
+          <path d="M155 160 Q190 142 225 160" stroke="#8B5C25" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.4"/>
+
+          <!-- Farine -->
+          <ellipse cx="165" cy="148" rx="8" ry="4" fill="white" opacity="0.25" transform="rotate(-15 165 148)"/>
+          <ellipse cx="218" cy="152" rx="6" ry="3" fill="white" opacity="0.2" transform="rotate(10 218 152)"/>
+          <ellipse cx="190" cy="140" rx="5" ry="2.5" fill="white" opacity="0.18"/>
+
+          <!-- Petits pains autour -->
+          <ellipse cx="68" cy="250" rx="42" ry="30" fill="#B8783A"/>
+          <ellipse cx="68" cy="244" rx="40" ry="26" fill="#D09050"/>
+          <ellipse cx="68" cy="240" rx="35" ry="21" fill="#DCA060"/>
+          <path d="M50 238 Q68 228 86 238" stroke="#8B5C25" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5"/>
+
+          <ellipse cx="312" cy="250" rx="42" ry="30" fill="#B8783A"/>
+          <ellipse cx="312" cy="244" rx="40" ry="26" fill="#D09050"/>
+          <ellipse cx="312" cy="240" rx="35" ry="21" fill="#DCA060"/>
+          <path d="M294 238 Q312 228 330 238" stroke="#8B5C25" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5"/>
+
+          <!-- Croissant -->
+          <path d="M 115 305 Q 90 278 108 260 Q 126 242 145 258 Q 152 264 155 275 Q 165 260 178 265 Q 195 272 182 295 Q 168 308 145 298 Q 130 308 115 305 Z" fill="#E8B050"/>
+          <path d="M 118 300 Q 95 278 112 262 Q 128 248 145 262 Q 152 268 154 278 Q 163 264 175 269 Q 190 276 178 296 Q 166 308 145 296 Q 130 306 118 300 Z" fill="#F0C060"/>
+
+          <!-- Épi de blé décoratif -->
+          <line x1="280" y1="310" x2="310" y2="280" stroke="#C8A96A" stroke-width="2" opacity="0.6"/>
+          <ellipse cx="280" cy="310" rx="7" ry="4" fill="#C8A96A" opacity="0.5" transform="rotate(-45 280 310)"/>
+          <ellipse cx="287" cy="303" rx="7" ry="4" fill="#C8A96A" opacity="0.5" transform="rotate(-45 287 303)"/>
+          <ellipse cx="294" cy="296" rx="7" ry="4" fill="#C8A96A" opacity="0.5" transform="rotate(-45 294 296)"/>
+          <ellipse cx="301" cy="289" rx="7" ry="4" fill="#C8A96A" opacity="0.5" transform="rotate(-45 301 289)"/>
+
+          <!-- Vapeur stylisée -->
+          <path d="M170 100 Q165 90 170 80 Q175 70 170 60" stroke="#C8A96A" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.35"/>
+          <path d="M190 95 Q185 83 190 72 Q195 61 190 50" stroke="#C8A96A" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.3"/>
+          <path d="M210 100 Q205 88 210 77 Q215 66 210 55" stroke="#C8A96A" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.35"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BAND -->
+<div class="band">
+  <span class="band-item">Levain naturel</span>
+  <span class="band-dot"></span>
+  <span class="band-item">Farine française Label Rouge</span>
+  <span class="band-dot"></span>
+  <span class="band-item">Cuisson au four à bois</span>
+  <span class="band-dot"></span>
+  <span class="band-item">Livraison locale disponible</span>
+  <span class="band-dot"></span>
+  <span class="band-item">Sans additifs ni conservateurs</span>
+  <span class="band-dot"></span>
+  <span class="band-item">Ouvert 7j/7</span>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="notre-histoire">
+  <div>
+    <div class="about-number">46</div>
+    <p class="section-eyebrow">Notre histoire</p>
+    <h2>Une <em>passion</em><br>transmise de père<br>en fils</h2>
+    <p>Fondée en 1978 par Marcel Dupont, notre boulangerie est restée fidèle à ses valeurs : un travail minutieux, des ingrédients de qualité et un amour sincère du bon pain.</p>
+    <p>Aujourd'hui, son fils Thomas perpétue la tradition tout en insufflant une touche contemporaine à notre gamme. Chaque recette est le fruit d'années d'expérience et d'un respect profond du métier.</p>
+    <div class="stats">
+      <div>
+        <div class="stat-value">46 ans</div>
+        <div class="stat-label">de savoir-faire</div>
+      </div>
+      <div>
+        <div class="stat-value">30+</div>
+        <div class="stat-label">recettes maison</div>
+      </div>
+      <div>
+        <div class="stat-value">100%</div>
+        <div class="stat-label">ingrédients locaux</div>
+      </div>
+      <div>
+        <div class="stat-value">4h</div>
+        <div class="stat-label">Lever à 4h du matin</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-image-placeholder">
+    <svg viewBox="0 0 340 420" fill="none" xmlns="http://www.w3.org/2000/svg" width="280">
+      <!-- Four à bois illustré -->
+      <rect x="30" y="200" width="280" height="180" rx="4" fill="#8B5C25" opacity="0.15"/>
+      <rect x="30" y="200" width="280" height="180" rx="4" fill="#8B5C25" opacity="0.08"/>
+      <!-- Voûte du four -->
+      <path d="M50 200 Q170 100 290 200 Z" fill="#C8924A" opacity="0.3"/>
+      <path d="M60 200 Q170 115 280 200 Z" fill="#D4A05A" opacity="0.25"/>
+      <!-- Ouverture four -->
+      <rect x="100" y="260" width="140" height="100" rx="70" fill="#2C1F0E" opacity="0.5"/>
+      <rect x="110" y="268" width="120" height="85" rx="60" fill="#1a0f06" opacity="0.7"/>
+      <!-- Flammes -->
+      <path d="M155 340 Q148 320 160 305 Q158 320 168 308 Q165 325 178 310 Q172 325 180 340 Q168 350 155 340Z" fill="#E8A030" opacity="0.6"/>
+      <path d="M162 335 Q157 318 167 306 Q164 320 172 308 Q170 322 178 312 Q174 326 180 335 Q171 344 162 335Z" fill="#F0C050" opacity="0.5"/>
+      <!-- Pain en enfournement stylisé -->
+      <ellipse cx="170" cy="230" rx="55" ry="22" fill="#D4924A" opacity="0.7"/>
+      <ellipse cx="170" cy="226" rx="52" ry="19" fill="#E0A855" opacity="0.7"/>
+      <path d="M128 223 Q170 210 212 223" stroke="#8B5C25" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.4"/>
+      <!-- Pelle de boulanger -->
+      <line x1="230" y1="180" x2="310" y2="80" stroke="#8B5C25" stroke-width="3" stroke-linecap="round" opacity="0.35"/>
+      <ellipse cx="225" cy="186" rx="22" ry="14" fill="#C8A96A" opacity="0.4" transform="rotate(-30 225 186)"/>
+      <!-- Décorations haut -->
+      <circle cx="85" cy="80" r="25" fill="#C8A96A" opacity="0.12"/>
+      <circle cx="170" cy="55" r="18" fill="#C8A96A" opacity="0.1"/>
+      <circle cx="255" cy="75" r="22" fill="#C8A96A" opacity="0.1"/>
+    </svg>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="nos-produits">
+  <div class="section-header">
+    <div>
+      <p class="section-eyebrow">Nos spécialités</p>
+      <h2 class="section-title">Fait avec <em>amour</em><br>chaque matin</h2>
+    </div>
+    <a href="#contact" class="btn-secondary">Passer commande →</a>
+  </div>
+  <div class="products-grid">
+    <div class="product-card">
+      <span class="product-tag">Notre fierté</span>
+      <svg class="product-icon" viewBox="0 0 56 56" fill="none">
+        <ellipse cx="28" cy="33" rx="22" ry="14" fill="#B07D3A"/>
+        <ellipse cx="28" cy="30" rx="21" ry="12" fill="#D4A05A"/>
+        <ellipse cx="28" cy="26" rx="18" ry="9" fill="#E0A855"/>
+        <path d="M14 24 Q28 16 42 24" stroke="#8B5C25" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+      </svg>
+      <h3>Pain au levain</h3>
+      <p>Notre pain signature, fermenté 24h pour une mie alvéolée et une croûte croustillante. Disponible en tradition ou seigle.</p>
+      <div class="product-price">À partir de 3,20 €</div>
+    </div>
+    <div class="product-card">
+      <span class="product-tag">Viennoiserie</span>
+      <svg class="product-icon" viewBox="0 0 56 56" fill="none">
+        <path d="M8 38 Q8 24 20 20 Q22 18 28 20 Q34 18 36 20 Q48 24 48 38 Q40 44 28 42 Q16 44 8 38Z" fill="#E8B050"/>
+        <path d="M10 36 Q10 24 21 21 Q28 19 35 21 Q46 24 46 36 Q38 42 28 40 Q18 42 10 36Z" fill="#F0C060"/>
+        <path d="M14 32 Q18 24 28 24 Q38 24 42 32" stroke="#C08020" stroke-width="1" fill="none" opacity="0.5"/>
+      </svg>
+      <h3>Croissant pur beurre</h3>
+      <p>Feuilleté à la main avec du beurre AOP Charentes-Poitou. Dorés, fondants, et absolument irrésistibles.</p>
+      <div class="product-price">1,40 €</div>
+    </div>
+    <div class="product-card">
+      <span class="product-tag">Spécialité</span>
+      <svg class="product-icon" viewBox="0 0 56 56" fill="none">
+        <rect x="8" y="28" width="40" height="20" rx="3" fill="#C8924A"/>
+        <rect x="10" y="24" width="36" height="22" rx="3" fill="#D4A05A"/>
+        <rect x="12" y="20" width="32" height="22" rx="3" fill="#E0B060"/>
+        <rect x="14" y="18" width="28" height="8" rx="2" fill="#D4A05A"/>
+        <line x1="20" y1="18" x2="20" y2="42" stroke="#C08040" stroke-width="1" opacity="0.4"/>
+        <line x1="28" y1="18" x2="28" y2="42" stroke="#C08040" stroke-width="1" opacity="0.4"/>
+        <line x1="36" y1="18" x2="36" y2="42" stroke="#C08040" stroke-width="1" opacity="0.4"/>
+      </svg>
+      <h3>Baguette Tradition</h3>
+      <p>Pétrie et façonnée selon la méthode pointage direct. Craquante, généreuse, conforme au décret de 1993.</p>
+      <div class="product-price">1,20 €</div>
+    </div>
+    <div class="product-card">
+      <svg class="product-icon" viewBox="0 0 56 56" fill="none">
+        <rect x="10" y="22" width="36" height="28" rx="4" fill="#8B5C25"/>
+        <rect x="12" y="18" width="32" height="28" rx="4" fill="#A06830"/>
+        <rect x="14" y="16" width="28" height="24" rx="3" fill="#B87840"/>
+        <circle cx="28" cy="28" r="6" fill="#6B4C2A" opacity="0.6"/>
+        <circle cx="18" cy="30" r="4" fill="#6B4C2A" opacity="0.4"/>
+        <circle cx="38" cy="26" r="4" fill="#6B4C2A" opacity="0.4"/>
+      </svg>
+      <h3>Pain de seigle</h3>
+      <p>Rustique et parfumé, idéal avec du fromage ou du saumon fumé. Cuit lentement au four pour une saveur intense.</p>
+      <div class="product-price">4,50 €</div>
+    </div>
+    <div class="product-card">
+      <span class="product-tag">Nouveauté</span>
+      <svg class="product-icon" viewBox="0 0 56 56" fill="none">
+        <circle cx="28" cy="30" r="18" fill="#C8924A"/>
+        <circle cx="28" cy="28" r="16" fill="#D4A05A"/>
+        <path d="M20 24 Q28 30 36 24" stroke="#8B5C25" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <circle cx="21" cy="28" r="3" fill="#8B5C25" opacity="0.4"/>
+        <circle cx="28" cy="32" r="3" fill="#8B5C25" opacity="0.4"/>
+        <circle cx="35" cy="28" r="3" fill="#8B5C25" opacity="0.4"/>
+        <circle cx="22" cy="35" r="2" fill="#E8B860" opacity="0.8"/>
+        <circle cx="34" cy="35" r="2" fill="#E8B860" opacity="0.8"/>
+      </svg>
+      <h3>Brioche Nanterre</h3>
+      <p>Moelleuse, riche en beurre et en œufs frais. Notre brioche de week-end qui s'arrache dès 7h du matin.</p>
+      <div class="product-price">5,90 €</div>
+    </div>
+    <div class="product-card">
+      <svg class="product-icon" viewBox="0 0 56 56" fill="none">
+        <ellipse cx="28" cy="36" rx="18" ry="10" fill="#B07D3A" opacity="0.5"/>
+        <ellipse cx="28" cy="32" rx="17" ry="13" fill="#8B5C25"/>
+        <ellipse cx="28" cy="28" rx="16" ry="11" fill="#A06830"/>
+        <path d="M15 26 Q22 20 28 22 Q34 20 41 26" stroke="#C08040" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.6"/>
+        <ellipse cx="28" cy="22" rx="8" ry="5" fill="#B07D3A" opacity="0.8"/>
+        <circle cx="22" cy="25" r="2.5" fill="#C8924A" opacity="0.6"/>
+        <circle cx="34" cy="25" r="2.5" fill="#C8924A" opacity="0.6"/>
+        <circle cx="28" cy="30" r="2.5" fill="#C8924A" opacity="0.6"/>
+      </svg>
+      <h3>Tarte aux pommes</h3>
+      <p>Garnie de pommes Golden de la région, crème pâtissière maison et pâte brisée dorée. Le classique revisité.</p>
+      <div class="product-price">14,00 €</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-header">
+    <div>
+      <p class="section-eyebrow">Avis clients</p>
+      <h2 class="section-title" style="color:var(--wheat)">Ce que disent<br>nos <em>fidèles</em></h2>
+    </div>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <blockquote>« La meilleure boulangerie du quartier, sans aucun doute. Le pain au levain est une merveille — on sent le travail et la passion à chaque bouchée. »</blockquote>
+      <p class="testimonial-author">Marie-Claire B. — Cliente depuis 12 ans</p>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <blockquote>« Je viens chaque dimanche pour les croissants. Ils sont dorés à la perfection, et l'accueil de l'équipe est toujours chaleureux. Un vrai bonheur. »</blockquote>
+      <p class="testimonial-author">Jean-Luc M. — Habitué du dimanche</p>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <blockquote>« J'ai commandé leur pain pour mon mariage. Les invités en ont encore parlé des mois après. Merci Thomas pour ce soin extraordinaire ! »</blockquote>
+      <p class="testimonial-author">Sophie & Arnaud R. — Commande spéciale</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOURS & CONTACT -->
+<section class="hours" id="horaires">
+  <div>
+    <p class="section-eyebrow">Quand nous trouver</p>
+    <h2 class="section-title">Horaires<br>& <em>accès</em></h2>
+    <table class="hours-table">
+      <tr><td>Lundi</td><td>7h00 – 19h30</td></tr>
+      <tr><td>Mardi</td><td>7h00 – 19h30</td></tr>
+      <tr><td>Mercredi</td><td>7h00 – 19h30</td></tr>
+      <tr><td>Jeudi</td><td>7h00 – 19h30</td></tr>
+      <tr><td>Vendredi</td><td>7h00 – 20h00</td></tr>
+      <tr><td>Samedi</td><td>6h30 – 20h00</td></tr>
+      <tr><td>Dimanche</td><td>6h30 – 13h00</td></tr>
+    </table>
+  </div>
+  <div id="contact">
+    <p class="section-eyebrow">Nous retrouver</p>
+    <h2 class="section-title">Venez nous<br><em>rendre visite</em></h2>
+    <div class="contact-info">
+      <div class="contact-item">
+        <span class="contact-icon">📍</span>
+        <div class="contact-text">
+          <strong>12 rue du Marché</strong><br>
+          62300 Lens, Hauts-de-France
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">📞</span>
+        <div class="contact-text">
+          <strong>03 21 XX XX XX</strong><br>
+          Du lundi au samedi, 8h – 12h
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">✉️</span>
+        <div class="contact-text">
+          <strong>contact@boulangerie-dupont.fr</strong><br>
+          Commandes spéciales, mariages, événements
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">🚗</span>
+        <div class="contact-text">
+          Parking gratuit place du Marché<br>
+          Bus ligne 3 — arrêt « Mairie »
+        </div>
+      </div>
+    </div>
+    <br>
+    <a href="mailto:contact@boulangerie-dupont.fr" class="btn-primary">Nous contacter</a>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="footer-logo">Boulangerie Dupont</div>
+    <p style="margin-top: 0.5rem;">12 rue du Marché, 62300 Lens</p>
+  </div>
+  <p class="footer-tagline">« Le bon pain, c'est toute notre vie. »</p>
+  <p>© 2024 Boulangerie Dupont.<br>Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>
